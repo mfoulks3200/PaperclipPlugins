@@ -152,6 +152,12 @@ npm test
 npm run build
 ```
 
+## Plugins
+
+| Plugin | Description | Status |
+| ------ | ----------- | ------ |
+| [`@paperclipai/plugin-chat`](packages/chat/) | Sidebar chat for direct agent messaging | In development |
+
 ## Documentation
 
 - [Architecture Overview](docs/ARCHITECTURE.md) — System design and data flow
