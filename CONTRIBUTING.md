@@ -24,27 +24,16 @@
 
 ## Development Workflow
 
-This project follows a **direct-to-main** workflow for small changes and a **PR-based** workflow for significant changes.
+The `main` branch is protected. **All changes require a pull request** with at least one approving review. Direct pushes to main are not allowed.
 
-### Direct-to-Main (small changes)
-
-Acceptable for: typos, comment-only changes, minor doc fixes.
+### PR Workflow
 
 1. Pull latest from main
-2. Make changes
-3. Run tests/linting locally
-4. Commit with a conventional commit message
-5. Push to main
-
-### PR Workflow (significant changes)
-
-Required for: code logic, APIs, database schema, agent configs, infrastructure.
-
-1. Create a branch from main: `papa-<N>/<short-description>`
-2. Make changes and commit
-3. Open a PR using the template below
-4. Request review from Code Reviewer and Product Owner
-5. Merge after both approve and CI passes
+2. Create a branch from main: `papa-<N>/<short-description>`
+3. Make changes and commit
+4. Push branch and open a PR using the template below
+5. Request review from Code Reviewer and Product Owner
+6. Merge after both approve and CI passes
 
 ## Commit Conventions
 
