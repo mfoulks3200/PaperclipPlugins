@@ -19,8 +19,7 @@ export function registerConversationsListProvider(ctx: PluginContext): void {
     })) ?? { conversations: [] }) as { conversations: Conversation[] };
 
     const sorted = [...stored.conversations].sort(
-      (a, b) =>
-        new Date(b.lastMessageAt).getTime() - new Date(a.lastMessageAt).getTime(),
+      (a, b) => new Date(b.lastMessageAt).getTime() - new Date(a.lastMessageAt).getTime(),
     );
 
     return {

@@ -17,8 +17,7 @@ export function registerEventHandlers(ctx: PluginContext, chatStream: ChatStream
   // Uses plugin-namespaced event since agent.response is not a core event type.
   // The host (or another plugin) emits this when an agent produces a chat reply.
   ctx.events.on("plugin.paperclip-chat.agent-response", async (event: PluginEvent) => {
-    const { agentId, conversationId, messageId, content } =
-      event.payload as AgentResponseEvent;
+    const { agentId, conversationId, messageId, content } = event.payload as AgentResponseEvent;
 
     ctx.logger.info("Received agent.response", { agentId, conversationId });
 

@@ -74,7 +74,11 @@ describe("chat worker", () => {
 
     it("should reject missing agentId or message", async () => {
       await expect(
-        harness.performAction("chat.send", { agentId: "", message: "hello", companyId: COMPANY_ID }),
+        harness.performAction("chat.send", {
+          agentId: "",
+          message: "hello",
+          companyId: COMPANY_ID,
+        }),
       ).rejects.toThrow("agentId and message are required");
 
       await expect(
@@ -112,9 +116,9 @@ describe("chat worker", () => {
     });
 
     it("should reject missing conversationId", async () => {
-      await expect(
-        harness.getData("chat.history", { companyId: COMPANY_ID }),
-      ).rejects.toThrow("conversationId is required");
+      await expect(harness.getData("chat.history", { companyId: COMPANY_ID })).rejects.toThrow(
+        "conversationId is required",
+      );
     });
   });
 
@@ -183,12 +187,16 @@ describe("chat worker", () => {
 
   describe("agent.response event handler", () => {
     it("should persist message to state", async () => {
-      await harness.emit("plugin.paperclip-chat.agent-response", {
-        agentId: "agent-1",
-        conversationId: "conv-1",
-        messageId: "msg-1",
-        content: "Hello from the agent!",
-      }, { companyId: COMPANY_ID });
+      await harness.emit(
+        "plugin.paperclip-chat.agent-response",
+        {
+          agentId: "agent-1",
+          conversationId: "conv-1",
+          messageId: "msg-1",
+          content: "Hello from the agent!",
+        },
+        { companyId: COMPANY_ID },
+      );
 
       const messages = harness.getState({
         scopeKind: "company",
@@ -206,19 +214,27 @@ describe("chat worker", () => {
     });
 
     it("should append to existing messages", async () => {
-      await harness.emit("plugin.paperclip-chat.agent-response", {
-        agentId: "agent-1",
-        conversationId: "conv-1",
-        messageId: "msg-1",
-        content: "First message",
-      }, { companyId: COMPANY_ID });
+      await harness.emit(
+        "plugin.paperclip-chat.agent-response",
+        {
+          agentId: "agent-1",
+          conversationId: "conv-1",
+          messageId: "msg-1",
+          content: "First message",
+        },
+        { companyId: COMPANY_ID },
+      );
 
-      await harness.emit("plugin.paperclip-chat.agent-response", {
-        agentId: "agent-1",
-        conversationId: "conv-1",
-        messageId: "msg-2",
-        content: "Second message",
-      }, { companyId: COMPANY_ID });
+      await harness.emit(
+        "plugin.paperclip-chat.agent-response",
+        {
+          agentId: "agent-1",
+          conversationId: "conv-1",
+          messageId: "msg-2",
+          content: "Second message",
+        },
+        { companyId: COMPANY_ID },
+      );
 
       const messages = harness.getState({
         scopeKind: "company",
@@ -232,16 +248,18 @@ describe("chat worker", () => {
     });
 
     it("should log the event", async () => {
-      await harness.emit("plugin.paperclip-chat.agent-response", {
-        agentId: "agent-1",
-        conversationId: "conv-1",
-        messageId: "msg-1",
-        content: "Hello",
-      }, { companyId: COMPANY_ID });
-
-      const logEntry = harness.logs.find(
-        (l) => l.message === "Received agent.response",
+      await harness.emit(
+        "plugin.paperclip-chat.agent-response",
+        {
+          agentId: "agent-1",
+          conversationId: "conv-1",
+          messageId: "msg-1",
+          content: "Hello",
+        },
+        { companyId: COMPANY_ID },
       );
+
+      const logEntry = harness.logs.find((l) => l.message === "Received agent.response");
       expect(logEntry).toBeDefined();
       expect(logEntry!.meta).toMatchObject({
         agentId: "agent-1",
@@ -252,10 +270,14 @@ describe("chat worker", () => {
 
   describe("agent.status event handler", () => {
     it("should cache agent status in state", async () => {
-      await harness.emit("agent.status_changed", {
-        agentId: "agent-1",
-        status: "busy",
-      }, { companyId: COMPANY_ID });
+      await harness.emit(
+        "agent.status_changed",
+        {
+          agentId: "agent-1",
+          status: "busy",
+        },
+        { companyId: COMPANY_ID },
+      );
 
       const cached = harness.getState({
         scopeKind: "company",
@@ -267,14 +289,16 @@ describe("chat worker", () => {
     });
 
     it("should log the event", async () => {
-      await harness.emit("agent.status_changed", {
-        agentId: "agent-1",
-        status: "idle",
-      }, { companyId: COMPANY_ID });
-
-      const logEntry = harness.logs.find(
-        (l) => l.message === "Received agent.status",
+      await harness.emit(
+        "agent.status_changed",
+        {
+          agentId: "agent-1",
+          status: "idle",
+        },
+        { companyId: COMPANY_ID },
       );
+
+      const logEntry = harness.logs.find((l) => l.message === "Received agent.status");
       expect(logEntry).toBeDefined();
       expect(logEntry!.meta).toMatchObject({
         agentId: "agent-1",
