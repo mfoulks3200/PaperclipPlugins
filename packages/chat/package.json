@@ -1,0 +1,37 @@
+{
+  "name": "@paperclipai/plugin-chat",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Sidebar chat plugin for direct agent messaging in Paperclip",
+  "paperclipPlugin": {
+    "manifest": "dist/manifest.js",
+    "worker": "dist/worker.js",
+    "ui": "dist/ui.js"
+  },
+  "scripts": {
+    "build": "node build.mjs",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "dev": "paperclipai plugin dev ."
+  },
+  "dependencies": {
+    "@paperclipai/plugin-sdk": "latest"
+  },
+  "peerDependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "@types/react": "^18.3.1",
+    "@types/react-dom": "^18.3.1",
+    "typescript": "^5.9.3",
+    "vitest": "^2.0.0",
+    "esbuild": "^0.27.0"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "license": "UNLICENSED"
+}
