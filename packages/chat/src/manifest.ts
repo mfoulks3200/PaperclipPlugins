@@ -1,21 +1,38 @@
-import { defineManifest } from "@paperclipai/plugin-sdk";
+import type { PaperclipPluginManifestV1 } from "@paperclipai/plugin-sdk";
 
-export default defineManifest({
+const manifest: PaperclipPluginManifestV1 = {
   id: "paperclip-chat",
-  name: "Chat",
+  apiVersion: 1,
   version: "0.1.0",
+  displayName: "Chat",
   description: "Direct agent messaging sidebar for Paperclip",
-  category: "ui",
-  slots: ["sidebar"],
+  author: "PaperclipPlugins",
+  categories: ["ui"],
   capabilities: [
     "events.subscribe",
     "events.emit",
     "http.outbound",
     "plugin.state.read",
     "plugin.state.write",
+    "ui.sidebar.register",
   ],
-  config: {
-    schema: {
+  entrypoints: {
+    worker: "dist/worker.js",
+    ui: "dist/ui.js",
+  },
+  ui: {
+    slots: [
+      {
+        type: "sidebar",
+        id: "chat-sidebar",
+        displayName: "Chat",
+        exportName: "default",
+      },
+    ],
+  },
+  instanceConfigSchema: {
+    type: "object",
+    properties: {
       defaultAgentId: {
         type: "string",
         description: "Default agent to start conversations with",
@@ -27,4 +44,6 @@ export default defineManifest({
       },
     },
   },
-});
+};
+
+export default manifest;

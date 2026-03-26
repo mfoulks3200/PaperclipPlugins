@@ -2,7 +2,7 @@ import React from "react";
 import { useHostContext } from "@paperclipai/plugin-sdk/ui";
 
 export default function ChatSidebar() {
-  const host = useHostContext();
+  useHostContext();
 
   return (
     <div className="chat-sidebar">
