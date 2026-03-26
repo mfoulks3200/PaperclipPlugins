@@ -7,4 +7,5 @@ const presets = createPluginBundlerPresets({
   ui: "src/ui/index.tsx",
 });
 
-await Promise.all(presets.map((preset) => build(preset)));
+const configs = Object.values(presets.esbuild).filter(Boolean);
+await Promise.all(configs.map((config) => build(config)));
